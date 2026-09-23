@@ -1,0 +1,4 @@
+Khi dùng `LEFT JOIN`, đối với các bản ghi không có giao dịch ở bảng `Orders` (như khách hàng Charlie), dữ liệu ghép sang của các cột thuộc bảng `Orders` sẽ mang giá trị `NULL`.
+
+- **Dùng `COUNT(*)`:** Đếm số dòng (row) trả về của kết quả nhóm. Dù dòng đó chứa `NULL`, `COUNT(*)` vẫn tính là 1 dòng, dẫn đến kết quả sai lệch là Charlie có 1 đơn hàng.
+- **Dùng `COUNT(o.order_id)`:** Bỏ qua các giá trị `NULL` trong cột được chỉ định. Do đó, với Charlie, giá trị `order_id` là `NULL` nên `COUNT` sẽ trả về chính xác là **0**.
