@@ -1,1 +1,15 @@
-INNER JOIN chỉ trả về các bản ghi trùng khớp ở cả 2 bảng. LEFT JOIN giữ lại toàn bộ dữ liệu bảng bên trái và chỉ ghép dữ liệu tương ứng ở bảng bên phải. Nếu dùng RIGHT JOIN giữ nguyên thứ tự Customers RIGHT JOIN Orders, kết quả chỉ lấy các đơn hàng và bỏ sót khách hàng chưa mua (tương tự INNER JOIN). Muốn kết quả đúng bằng RIGHT JOIN, phải đảo thứ tự bảng: Orders RIGHT JOIN Customers.
+# Nhật ký tương tác với AI (AI Prompt Log)
+
+## Prompt 1: Hỏi về sự khác biệt giữa INNER JOIN và LEFT JOIN
+- **Câu hỏi:** Giải thích sự khác biệt giữa INNER JOIN và LEFT JOIN khi ghép 2 bảng trong MySQL?
+- **Trả lời từ AI:** 
+  - `INNER JOIN`: Chỉ trả về các bản ghi trùng khớp ở cả 2 bảng. Những dòng không tương thích ở 1 trong 2 bảng sẽ bị loại bỏ hoàn toàn.
+  - `LEFT JOIN`: Giữ lại toàn bộ dữ liệu ở bảng bên trái (Left table). Nếu bảng bên phải không có dữ liệu tương ứng, các cột thuộc bảng bên phải sẽ nhận giá trị `NULL`.
+
+## Prompt 2: Phân biệt COUNT(*) và COUNT(column) khi LEFT JOIN
+- **Câu hỏi:** Khi dùng LEFT JOIN kết hợp GROUP BY, nên đếm bằng `COUNT(*)` hay `COUNT(foreign_key)`?
+- **Trả lời từ AI:** Nên đếm theo cột khóa chính/khóa ngoại của bảng phụ `COUNT(foreign_key)` để các bản ghi bị `NULL` trả về 0. Nếu dùng `COUNT(*)`, hệ thống vẫn đếm dòng `NULL` đó là 1.
+
+## Prompt 3: Tìm hiểu thuật toán Nested-Loop Join trong MySQL Optimizer
+- **Câu hỏi:** MySQL tối ưu hóa câu lệnh JOIN bằng thuật toán gì?
+- **Trả lời từ AI:** MySQL Optimizer sử dụng thuật toán **Nested-Loop Join** (hoặc Block Nested-Loop Join / Hash Join ở các phiên bản mới) để duyệt qua bảng bên ngoài (Outer table) và tìm các bản ghi trùng khớp ở bảng bên trong (Inner table). Do đó, đặt bảng có ít dòng hoặc có chỉ mục (Index) tốt làm Outer table giúp tối ưu tốc độ truy vấn.
